@@ -16,20 +16,40 @@ namespace BouncingTool
 
 		private void OnFormClose(object sender, FormClosingEventArgs e)
 		{
-			XboxUtils.Disconnect();
+			if (!XboxUtils.IsConnected())
+				return;
+
+			try
+			{
+				string consoleName = XboxUtils.GetConsoleName();
+				XboxUtils.Disconnect();
+				XboxUtils.ConfirmMessage("Successfully disconnected from console: " + consoleName);
+			}
+			catch (Exception exception)
+			{
+				XboxUtils.ErrorMessage(exception.Message);
+			}
 		}
 
 		private void OnConnectButtonClick(object sender, EventArgs e)
 		{
-			if (XboxUtils.Connect())
+			try
+			{
+				XboxUtils.Connect();
+				XboxUtils.ConfirmMessage("Successfully connected to console: " + XboxUtils.GetConsoleName());
 				EnableUIElements(true);
+			}
+			catch (Exception exception)
+			{
+				XboxUtils.ErrorMessage(exception.Message);
+			}
 		}
 
 		private void OnInfectButtonClick(object sender, EventArgs e)
 		{
 			if (!(XboxUtils.GetCurrentTitleID() == (uint)XboxUtils.TitleIDs.MW2))
 			{
-				XboxUtils.DisplayErrorMessage("It doesn't look like you are on MW2, make sure you are on the game before trying to infect!");
+				XboxUtils.ErrorMessage("It doesn't look like you are on MW2, make sure you are on the game before trying to infect!");
 				return;
 			}
 
@@ -41,7 +61,7 @@ namespace BouncingTool
 		{
 			if (!(XboxUtils.GetCurrentTitleID() == (uint)XboxUtils.TitleIDs.MW2))
 			{
-				XboxUtils.DisplayErrorMessage("It doesn't look like you are on MW2, make sure you are on the game before trying to toggle elevators!");
+				XboxUtils.ErrorMessage("It doesn't look like you are on MW2, make sure you are on the game before trying to toggle elevators!");
 				return;
 			}
 

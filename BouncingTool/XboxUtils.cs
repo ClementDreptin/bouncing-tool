@@ -18,13 +18,10 @@ public static class XboxUtils
 		MW3 = 0x415608CB
 	}
 
-	public static bool Connect()
+	public static void Connect()
 	{
 		m_XboxManager = new XboxManager();
 		m_XboxConsole = m_XboxManager.OpenConsole(m_XboxManager.DefaultConsole);
-
-		string debuggerName = null;
-		string userName = null;
 
 		try
 		{
@@ -32,39 +29,24 @@ public static class XboxUtils
 		}
 		catch (Exception)
 		{
-			m_ActiveConnection = false;
-			DisplayErrorMessage("Could not connect to console: " + m_XboxManager.DefaultConsole);
-			return false;
+			throw new Exception("Couldn't connect to console: " + m_XboxManager.DefaultConsole);
 		}
 
-		if (m_XboxConsole.DebugTarget.IsDebuggerConnected(out debuggerName, out userName))
-		{
-			m_ActiveConnection = true;
-			DisplayConfirmMessage("Successfully connected to console: " + m_XboxConsole.Name);
-			return true;
-		}
-		else
+		if (!m_XboxConsole.DebugTarget.IsDebuggerConnected(out string debuggerName, out string userName))
 		{
 			m_XboxConsole.DebugTarget.ConnectAsDebugger("XboxTool", XboxDebugConnectFlags.Force);
+
 			if (!m_XboxConsole.DebugTarget.IsDebuggerConnected(out debuggerName, out userName))
-			{
-				m_ActiveConnection = false;
-				DisplayErrorMessage("Could not connect a debugger to console: " + m_XboxConsole.Name);
-				return false;
-			}
-			else
-			{
-				m_ActiveConnection = true;
-				DisplayConfirmMessage("Successfully connected to console: " + m_XboxConsole.Name);
-				return true;
-			}
+				throw new Exception("Couldn't connect a debugger to console: " + m_XboxConsole.Name);
 		}
+
+		m_ActiveConnection = true;
 	}
 
-	public static bool Disconnect()
+	public static void Disconnect()
 	{
 		if (!m_ActiveConnection)
-			return true;
+			return;
 
 		try
 		{
@@ -74,27 +56,31 @@ public static class XboxUtils
 			if (m_XboxConnection != 0)
 			{
 				m_XboxConsole.CloseConnection(m_XboxConnection);
-				DisplayConfirmMessage("Successfully disconnected from console: " + m_XboxConsole.Name);
-				return true;
+				m_ActiveConnection = false;
 			}
 		}
 		catch (Exception)
 		{
-			DisplayErrorMessage("Could not disconnect from console: " + m_XboxConsole.Name);
-			return false;
+			throw new Exception("Could not disconnect from console: " + m_XboxConsole.Name);
 		}
-
-		return true;
 	}
 
-	public static void DisplayErrorMessage(string message)
+	public static void ErrorMessage(string message)
 	{
 		MessageBox.Show(message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 	}
 
-	public static void DisplayConfirmMessage(string message)
+	public static void ConfirmMessage(string message)
 	{
 		MessageBox.Show(message, "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+	}
+
+	public static string GetConsoleName()
+	{
+		if (!IsConnected())
+			throw new Exception("Not connected to a console");
+
+		return m_XboxConsole.Name;
 	}
 
 	public static T Call<T>(uint address, params object[] args) where T : struct
@@ -110,7 +96,7 @@ public static class XboxUtils
 		}
 		catch (Exception)
 		{
-			DisplayErrorMessage("Error while calling the function!");
+			throw new Exception("Error while calling the function!");
 		}
 
 		return returnValue;
@@ -129,7 +115,7 @@ public static class XboxUtils
 		}
 		catch (Exception)
 		{
-			DisplayErrorMessage("Error while calling the function!");
+			throw new Exception("Error while calling the function!");
 		}
 
 		return returnValue;
@@ -144,11 +130,11 @@ public static class XboxUtils
 
 		try
 		{
-			titleID = m_XboxConsole.ExecuteRPC<uint>(XDRPCMode.System, "xam.xex", 463, new object[] { });
+			titleID = Call<uint>("xam.xex", 463, new object[] { });
 		}
 		catch (Exception)
 		{
-			DisplayErrorMessage("Couldn't get current title ID");
+			throw new Exception("Couldn't get current title ID");
 		}
 
 		return titleID;
@@ -156,7 +142,7 @@ public static class XboxUtils
 
 	public static void XNotify(string text)
 	{
-		if (!m_ActiveConnection)
+		if (!IsConnected())
 			return;
 
 		try
@@ -165,21 +151,21 @@ public static class XboxUtils
 		}
 		catch (Exception)
 		{
-			DisplayErrorMessage("Couldn't call XNotify!");
+			throw new Exception("Couldn't call XNotify!");
 		}
 	}
 
 	public static bool IsConnected()
 	{
-		if (!m_ActiveConnection)
-			DisplayErrorMessage("Not currently connected to a console!");
-
 		return m_ActiveConnection;
 	}
 
 	public static uint ReadUInt32(uint address)
 	{
 		uint result = 0;
+
+		if (!IsConnected())
+			return result;
 
 		try
 		{
@@ -191,7 +177,7 @@ public static class XboxUtils
 		}
 		catch (Exception)
 		{
-			DisplayErrorMessage("Could not read a uint32 at 0x" + address.ToString("X"));
+			throw new Exception("Could not read a uint32 at 0x" + address.ToString("X"));
 		}
 
 		return result;
@@ -211,13 +197,16 @@ public static class XboxUtils
 		}
 		catch (Exception)
 		{
-			DisplayErrorMessage("Could not write a uint32 at 0x" + address.ToString("X"));
+			throw new Exception("Could not write a uint32 at 0x" + address.ToString("X"));
 		}
 	}
 
 	public static float ReadFloat(uint address)
 	{
 		float result = 0.0f;
+
+		if (!IsConnected())
+			return result;
 
 		try
 		{
@@ -229,7 +218,7 @@ public static class XboxUtils
 		}
 		catch (Exception)
 		{
-			DisplayErrorMessage("Could not read a float at 0x" + address.ToString("X"));
+			throw new Exception("Could not read a float at 0x" + address.ToString("X"));
 		}
 
 		return result;
@@ -249,13 +238,16 @@ public static class XboxUtils
 		}
 		catch (Exception)
 		{
-			DisplayErrorMessage("Could not write a float at 0x" + address.ToString("X"));
+			throw new Exception("Could not write a float at 0x" + address.ToString("X"));
 		}
 	}
 
 	public static int ReadInt(uint address)
 	{
 		int result = 0;
+
+		if (!IsConnected())
+			return result;
 
 		try
 		{
@@ -267,7 +259,7 @@ public static class XboxUtils
 		}
 		catch (Exception)
 		{
-			DisplayErrorMessage("Could not read a float at 0x" + address.ToString("X"));
+			throw new Exception("Could not read a float at 0x" + address.ToString("X"));
 		}
 
 		return result;
@@ -287,13 +279,16 @@ public static class XboxUtils
 		}
 		catch (Exception)
 		{
-			DisplayErrorMessage("Could not write a float at 0x" + address.ToString("X"));
+			throw new Exception("Could not write a float at 0x" + address.ToString("X"));
 		}
 	}
 
 	public static float[] ReadVec3(uint address)
 	{
 		float[] result = { 0.0f, 0.0f, 0.0f };
+
+		if (!IsConnected())
+			return result;
 
 		try
 		{
@@ -306,7 +301,7 @@ public static class XboxUtils
 		}
 		catch (Exception)
 		{
-			DisplayErrorMessage("Could not read a vec3 at 0x" + address.ToString("X"));
+			throw new Exception("Could not read a vec3 at 0x" + address.ToString("X"));
 		}
 
 		return result;
@@ -319,8 +314,7 @@ public static class XboxUtils
 
 		if (input.Length != 3)
 		{
-			DisplayErrorMessage("The input needs to be an array of exactly 3 floats");
-			return;
+			throw new Exception("The input needs to be an array of exactly 3 floats");
 		}
 
 		try
@@ -331,16 +325,18 @@ public static class XboxUtils
 			Array.Reverse(memoryBuffer, 0, memoryBuffer.Length);
 			m_XboxConsole.DebugTarget.SetMemory(address, (uint)memoryBuffer.Length, memoryBuffer, out uint bytesWritten);
 		}
-		catch (Exception e)
+		catch (Exception)
 		{
-			DisplayErrorMessage("Could not write a vec3 at 0x" + address.ToString("X"));
-			Console.WriteLine(e.Message);
+			throw new Exception("Could not write a vec3 at 0x" + address.ToString("X"));
 		}
 	}
 
 	public static short ReadShort(uint address)
 	{
-		short result = 0;
+		short result = 0; ;
+
+		if (!IsConnected())
+			return result;
 
 		try
 		{
@@ -352,7 +348,7 @@ public static class XboxUtils
 		}
 		catch (Exception)
 		{
-			DisplayErrorMessage("Could not read a float at 0x" + address.ToString("X"));
+			throw new Exception("Could not read a float at 0x" + address.ToString("X"));
 		}
 
 		return result;
@@ -372,7 +368,7 @@ public static class XboxUtils
 		}
 		catch (Exception)
 		{
-			DisplayErrorMessage("Could not write a float at 0x" + address.ToString("X"));
+			throw new Exception("Could not write a float at 0x" + address.ToString("X"));
 		}
 	}
 
