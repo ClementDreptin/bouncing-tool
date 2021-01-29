@@ -88,4 +88,18 @@
     <None Include="App.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>@echo off
+if exist "$(TargetDir)xdevkit.dll" (
+     exit
+)
+
+if not exist "$(ProjectDir)lib\xdevkit.dll" (
+     exit
+)
+
+xcopy /y/q "$(ProjectDir)lib\xdevkit.dll" "$(TargetDir)" &gt; nul
+
+echo xdevkit.dll copied to target directory</PostBuildEvent>
+  </PropertyGroup>
 </Project>
