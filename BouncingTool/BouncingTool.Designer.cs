@@ -29,173 +29,225 @@ namespace BouncingTool
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.connectButton = new System.Windows.Forms.Button();
-			this.strengthValueInput = new System.Windows.Forms.NumericUpDown();
-			this.infectButton = new System.Windows.Forms.Button();
-			this.strengthLabel = new System.Windows.Forms.Label();
-			this.notesLabel = new System.Windows.Forms.Label();
-			this.minValueLabel = new System.Windows.Forms.Label();
-			this.maxValueLabel = new System.Windows.Forms.Label();
-			this.recommendedValueLabel = new System.Windows.Forms.Label();
-			this.elevatorsButton = new System.Windows.Forms.Button();
-			this.elevatorsLabel = new System.Windows.Forms.Label();
-			((System.ComponentModel.ISupportInitialize)(this.strengthValueInput)).BeginInit();
+			this.Global_ConnectButton = new System.Windows.Forms.Button();
+			this.MW2_ElevatorsButton = new System.Windows.Forms.Button();
+			this.MW2_ElevatorsLabel = new System.Windows.Forms.Label();
+			this.Global_TabControl = new System.Windows.Forms.TabControl();
+			this.Global_MW2Tab = new System.Windows.Forms.TabPage();
+			this.MW2_RecommendedValueLabel = new System.Windows.Forms.Label();
+			this.MW2_MaxValueLabel = new System.Windows.Forms.Label();
+			this.MW2_MinValueLabel = new System.Windows.Forms.Label();
+			this.MW2_NotesLabel = new System.Windows.Forms.Label();
+			this.MW2_StrengthLabel = new System.Windows.Forms.Label();
+			this.MW2_KnockbackButton = new System.Windows.Forms.Button();
+			this.MW2_KnockbackStrengthInput = new System.Windows.Forms.NumericUpDown();
+			this.Global_AlphaTab = new System.Windows.Forms.TabPage();
+			this.Global_TabControl.SuspendLayout();
+			this.Global_MW2Tab.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.MW2_KnockbackStrengthInput)).BeginInit();
 			this.SuspendLayout();
 			// 
-			// connectButton
+			// Global_ConnectButton
 			// 
-			this.connectButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.connectButton.Location = new System.Drawing.Point(12, 12);
-			this.connectButton.Name = "connectButton";
-			this.connectButton.Size = new System.Drawing.Size(357, 58);
-			this.connectButton.TabIndex = 0;
-			this.connectButton.Text = "Connect";
-			this.connectButton.UseVisualStyleBackColor = true;
-			this.connectButton.Click += new System.EventHandler(this.OnConnectButtonClick);
+			this.Global_ConnectButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.Global_ConnectButton.Location = new System.Drawing.Point(12, 12);
+			this.Global_ConnectButton.Name = "Global_ConnectButton";
+			this.Global_ConnectButton.Size = new System.Drawing.Size(357, 58);
+			this.Global_ConnectButton.TabIndex = 0;
+			this.Global_ConnectButton.Text = "Connect";
+			this.Global_ConnectButton.UseVisualStyleBackColor = true;
+			this.Global_ConnectButton.Click += new System.EventHandler(this.OnConnectButtonClick);
 			// 
-			// strengthValueInput
+			// MW2_ElevatorsButton
 			// 
-			this.strengthValueInput.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.strengthValueInput.Location = new System.Drawing.Point(231, 148);
-			this.strengthValueInput.Maximum = new decimal(new int[] {
+			this.MW2_ElevatorsButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.MW2_ElevatorsButton.Location = new System.Drawing.Point(14, 224);
+			this.MW2_ElevatorsButton.Name = "MW2_ElevatorsButton";
+			this.MW2_ElevatorsButton.Size = new System.Drawing.Size(179, 53);
+			this.MW2_ElevatorsButton.TabIndex = 8;
+			this.MW2_ElevatorsButton.Text = "Toggle Elevators";
+			this.MW2_ElevatorsButton.UseVisualStyleBackColor = true;
+			this.MW2_ElevatorsButton.Click += new System.EventHandler(this.MW2_OnElevatorsButtonClick);
+			// 
+			// MW2_ElevatorsLabel
+			// 
+			this.MW2_ElevatorsLabel.AutoSize = true;
+			this.MW2_ElevatorsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.MW2_ElevatorsLabel.Location = new System.Drawing.Point(224, 240);
+			this.MW2_ElevatorsLabel.Name = "MW2_ElevatorsLabel";
+			this.MW2_ElevatorsLabel.Size = new System.Drawing.Size(0, 20);
+			this.MW2_ElevatorsLabel.TabIndex = 9;
+			// 
+			// Global_TabControl
+			// 
+			this.Global_TabControl.Controls.Add(this.Global_MW2Tab);
+			this.Global_TabControl.Controls.Add(this.Global_AlphaTab);
+			this.Global_TabControl.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.Global_TabControl.Location = new System.Drawing.Point(12, 91);
+			this.Global_TabControl.Multiline = true;
+			this.Global_TabControl.Name = "Global_TabControl";
+			this.Global_TabControl.SelectedIndex = 0;
+			this.Global_TabControl.Size = new System.Drawing.Size(361, 338);
+			this.Global_TabControl.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
+			this.Global_TabControl.TabIndex = 10;
+			// 
+			// Global_MW2Tab
+			// 
+			this.Global_MW2Tab.Controls.Add(this.MW2_RecommendedValueLabel);
+			this.Global_MW2Tab.Controls.Add(this.MW2_ElevatorsLabel);
+			this.Global_MW2Tab.Controls.Add(this.MW2_MaxValueLabel);
+			this.Global_MW2Tab.Controls.Add(this.MW2_MinValueLabel);
+			this.Global_MW2Tab.Controls.Add(this.MW2_NotesLabel);
+			this.Global_MW2Tab.Controls.Add(this.MW2_StrengthLabel);
+			this.Global_MW2Tab.Controls.Add(this.MW2_KnockbackButton);
+			this.Global_MW2Tab.Controls.Add(this.MW2_KnockbackStrengthInput);
+			this.Global_MW2Tab.Controls.Add(this.MW2_ElevatorsButton);
+			this.Global_MW2Tab.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.Global_MW2Tab.Location = new System.Drawing.Point(4, 29);
+			this.Global_MW2Tab.Name = "Global_MW2Tab";
+			this.Global_MW2Tab.Padding = new System.Windows.Forms.Padding(3);
+			this.Global_MW2Tab.Size = new System.Drawing.Size(353, 305);
+			this.Global_MW2Tab.TabIndex = 0;
+			this.Global_MW2Tab.Text = "MW2";
+			this.Global_MW2Tab.UseVisualStyleBackColor = true;
+			// 
+			// MW2_RecommendedValueLabel
+			// 
+			this.MW2_RecommendedValueLabel.AutoSize = true;
+			this.MW2_RecommendedValueLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.MW2_RecommendedValueLabel.Location = new System.Drawing.Point(29, 168);
+			this.MW2_RecommendedValueLabel.Name = "MW2_RecommendedValueLabel";
+			this.MW2_RecommendedValueLabel.Size = new System.Drawing.Size(243, 18);
+			this.MW2_RecommendedValueLabel.TabIndex = 15;
+			this.MW2_RecommendedValueLabel.Text = "- The recommended value is 30000.";
+			// 
+			// MW2_MaxValueLabel
+			// 
+			this.MW2_MaxValueLabel.AutoSize = true;
+			this.MW2_MaxValueLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.MW2_MaxValueLabel.Location = new System.Drawing.Point(29, 140);
+			this.MW2_MaxValueLabel.Name = "MW2_MaxValueLabel";
+			this.MW2_MaxValueLabel.Size = new System.Drawing.Size(183, 18);
+			this.MW2_MaxValueLabel.TabIndex = 14;
+			this.MW2_MaxValueLabel.Text = "- The max value is 999999.";
+			// 
+			// MW2_MinValueLabel
+			// 
+			this.MW2_MinValueLabel.AutoSize = true;
+			this.MW2_MinValueLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.MW2_MinValueLabel.Location = new System.Drawing.Point(29, 112);
+			this.MW2_MinValueLabel.Name = "MW2_MinValueLabel";
+			this.MW2_MinValueLabel.Size = new System.Drawing.Size(248, 18);
+			this.MW2_MinValueLabel.TabIndex = 13;
+			this.MW2_MinValueLabel.Text = "- The min (and default) value is 1000.";
+			// 
+			// MW2_NotesLabel
+			// 
+			this.MW2_NotesLabel.AutoSize = true;
+			this.MW2_NotesLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.MW2_NotesLabel.Location = new System.Drawing.Point(10, 82);
+			this.MW2_NotesLabel.Name = "MW2_NotesLabel";
+			this.MW2_NotesLabel.Size = new System.Drawing.Size(64, 20);
+			this.MW2_NotesLabel.TabIndex = 12;
+			this.MW2_NotesLabel.Text = "Notes:";
+			// 
+			// MW2_StrengthLabel
+			// 
+			this.MW2_StrengthLabel.AutoSize = true;
+			this.MW2_StrengthLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.MW2_StrengthLabel.Location = new System.Drawing.Point(230, 20);
+			this.MW2_StrengthLabel.Name = "MW2_StrengthLabel";
+			this.MW2_StrengthLabel.Size = new System.Drawing.Size(67, 18);
+			this.MW2_StrengthLabel.TabIndex = 11;
+			this.MW2_StrengthLabel.Text = "Strength:";
+			// 
+			// MW2_KnockbackButton
+			// 
+			this.MW2_KnockbackButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.MW2_KnockbackButton.Location = new System.Drawing.Point(11, 20);
+			this.MW2_KnockbackButton.Name = "MW2_KnockbackButton";
+			this.MW2_KnockbackButton.Size = new System.Drawing.Size(213, 50);
+			this.MW2_KnockbackButton.TabIndex = 10;
+			this.MW2_KnockbackButton.Text = "Infect with Knockback";
+			this.MW2_KnockbackButton.UseVisualStyleBackColor = true;
+			this.MW2_KnockbackButton.Click += new System.EventHandler(this.MW2_OnKnockbackButtonClick);
+			// 
+			// MW2_KnockbackStrengthInput
+			// 
+			this.MW2_KnockbackStrengthInput.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.MW2_KnockbackStrengthInput.Location = new System.Drawing.Point(229, 43);
+			this.MW2_KnockbackStrengthInput.Maximum = new decimal(new int[] {
             999999,
             0,
             0,
             0});
-			this.strengthValueInput.Minimum = new decimal(new int[] {
+			this.MW2_KnockbackStrengthInput.Minimum = new decimal(new int[] {
             1000,
             0,
             0,
             0});
-			this.strengthValueInput.Name = "strengthValueInput";
-			this.strengthValueInput.Size = new System.Drawing.Size(138, 27);
-			this.strengthValueInput.TabIndex = 1;
-			this.strengthValueInput.Value = new decimal(new int[] {
+			this.MW2_KnockbackStrengthInput.Name = "MW2_KnockbackStrengthInput";
+			this.MW2_KnockbackStrengthInput.Size = new System.Drawing.Size(114, 27);
+			this.MW2_KnockbackStrengthInput.TabIndex = 9;
+			this.MW2_KnockbackStrengthInput.Value = new decimal(new int[] {
             30000,
             0,
             0,
             0});
 			// 
-			// infectButton
+			// Global_AlphaTab
 			// 
-			this.infectButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.infectButton.Location = new System.Drawing.Point(13, 125);
-			this.infectButton.Name = "infectButton";
-			this.infectButton.Size = new System.Drawing.Size(213, 50);
-			this.infectButton.TabIndex = 2;
-			this.infectButton.Text = "Infect with Knockback";
-			this.infectButton.UseVisualStyleBackColor = true;
-			this.infectButton.Click += new System.EventHandler(this.OnInfectButtonClick);
-			// 
-			// strengthLabel
-			// 
-			this.strengthLabel.AutoSize = true;
-			this.strengthLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.strengthLabel.Location = new System.Drawing.Point(232, 125);
-			this.strengthLabel.Name = "strengthLabel";
-			this.strengthLabel.Size = new System.Drawing.Size(67, 18);
-			this.strengthLabel.TabIndex = 3;
-			this.strengthLabel.Text = "Strength:";
-			// 
-			// notesLabel
-			// 
-			this.notesLabel.AutoSize = true;
-			this.notesLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.notesLabel.Location = new System.Drawing.Point(12, 187);
-			this.notesLabel.Name = "notesLabel";
-			this.notesLabel.Size = new System.Drawing.Size(64, 20);
-			this.notesLabel.TabIndex = 4;
-			this.notesLabel.Text = "Notes:";
-			// 
-			// minValueLabel
-			// 
-			this.minValueLabel.AutoSize = true;
-			this.minValueLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.minValueLabel.Location = new System.Drawing.Point(31, 217);
-			this.minValueLabel.Name = "minValueLabel";
-			this.minValueLabel.Size = new System.Drawing.Size(248, 18);
-			this.minValueLabel.TabIndex = 5;
-			this.minValueLabel.Text = "- The min (and default) value is 1000.";
-			// 
-			// maxValueLabel
-			// 
-			this.maxValueLabel.AutoSize = true;
-			this.maxValueLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.maxValueLabel.Location = new System.Drawing.Point(31, 245);
-			this.maxValueLabel.Name = "maxValueLabel";
-			this.maxValueLabel.Size = new System.Drawing.Size(183, 18);
-			this.maxValueLabel.TabIndex = 6;
-			this.maxValueLabel.Text = "- The max value is 999999.";
-			// 
-			// recommendedValueLabel
-			// 
-			this.recommendedValueLabel.AutoSize = true;
-			this.recommendedValueLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.recommendedValueLabel.Location = new System.Drawing.Point(31, 273);
-			this.recommendedValueLabel.Name = "recommendedValueLabel";
-			this.recommendedValueLabel.Size = new System.Drawing.Size(243, 18);
-			this.recommendedValueLabel.TabIndex = 7;
-			this.recommendedValueLabel.Text = "- The recommended value is 30000.";
-			// 
-			// elevatorsButton
-			// 
-			this.elevatorsButton.Enabled = false;
-			this.elevatorsButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.elevatorsButton.Location = new System.Drawing.Point(16, 330);
-			this.elevatorsButton.Name = "elevatorsButton";
-			this.elevatorsButton.Size = new System.Drawing.Size(179, 50);
-			this.elevatorsButton.TabIndex = 8;
-			this.elevatorsButton.Text = "Toggle Elevators";
-			this.elevatorsButton.UseVisualStyleBackColor = true;
-			this.elevatorsButton.Click += new System.EventHandler(this.OnElevatorButtonClick);
-			// 
-			// elevatorsLabel
-			// 
-			this.elevatorsLabel.AutoSize = true;
-			this.elevatorsLabel.Enabled = false;
-			this.elevatorsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.elevatorsLabel.Location = new System.Drawing.Point(227, 345);
-			this.elevatorsLabel.Name = "elevatorsLabel";
-			this.elevatorsLabel.Size = new System.Drawing.Size(0, 20);
-			this.elevatorsLabel.TabIndex = 9;
+			this.Global_AlphaTab.Location = new System.Drawing.Point(4, 29);
+			this.Global_AlphaTab.Name = "Global_AlphaTab";
+			this.Global_AlphaTab.Padding = new System.Windows.Forms.Padding(3);
+			this.Global_AlphaTab.Size = new System.Drawing.Size(353, 305);
+			this.Global_AlphaTab.TabIndex = 1;
+			this.Global_AlphaTab.Text = "Alpha";
+			this.Global_AlphaTab.UseVisualStyleBackColor = true;
 			// 
 			// BouncingTool
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(381, 404);
-			this.Controls.Add(this.elevatorsLabel);
-			this.Controls.Add(this.elevatorsButton);
-			this.Controls.Add(this.recommendedValueLabel);
-			this.Controls.Add(this.maxValueLabel);
-			this.Controls.Add(this.minValueLabel);
-			this.Controls.Add(this.notesLabel);
-			this.Controls.Add(this.strengthLabel);
-			this.Controls.Add(this.infectButton);
-			this.Controls.Add(this.strengthValueInput);
-			this.Controls.Add(this.connectButton);
+			this.ClientSize = new System.Drawing.Size(389, 447);
+			this.Controls.Add(this.Global_TabControl);
+			this.Controls.Add(this.Global_ConnectButton);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
 			this.Name = "BouncingTool";
 			this.Text = "MW2 Bouncing Tool";
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.OnFormClose);
-			((System.ComponentModel.ISupportInitialize)(this.strengthValueInput)).EndInit();
+			this.Global_TabControl.ResumeLayout(false);
+			this.Global_MW2Tab.ResumeLayout(false);
+			this.Global_MW2Tab.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.MW2_KnockbackStrengthInput)).EndInit();
 			this.ResumeLayout(false);
-			this.PerformLayout();
 
 		}
 
 		#endregion
 
-		private System.Windows.Forms.Button connectButton;
-		private System.Windows.Forms.NumericUpDown strengthValueInput;
-		private System.Windows.Forms.Button infectButton;
-		private System.Windows.Forms.Label strengthLabel;
-		private System.Windows.Forms.Label notesLabel;
-		private System.Windows.Forms.Label minValueLabel;
-		private System.Windows.Forms.Label maxValueLabel;
-		private System.Windows.Forms.Label recommendedValueLabel;
-		private System.Windows.Forms.Button elevatorsButton;
-		private System.Windows.Forms.Label elevatorsLabel;
+		#region UI elements getters
+
+		public System.Windows.Forms.Label GetMW2ElevatorsLabel()
+		{
+			return MW2_ElevatorsLabel;
+		}
+
+		#endregion
+
+		private System.Windows.Forms.Button Global_ConnectButton;
+		private System.Windows.Forms.Button MW2_ElevatorsButton;
+		private System.Windows.Forms.Label MW2_ElevatorsLabel;
+		private System.Windows.Forms.TabControl Global_TabControl;
+		private System.Windows.Forms.TabPage Global_MW2Tab;
+		private System.Windows.Forms.TabPage Global_AlphaTab;
+		private System.Windows.Forms.Label MW2_RecommendedValueLabel;
+		private System.Windows.Forms.Label MW2_MaxValueLabel;
+		private System.Windows.Forms.Label MW2_MinValueLabel;
+		private System.Windows.Forms.Label MW2_NotesLabel;
+		private System.Windows.Forms.Label MW2_StrengthLabel;
+		private System.Windows.Forms.Button MW2_KnockbackButton;
+		private System.Windows.Forms.NumericUpDown MW2_KnockbackStrengthInput;
 	}
 }
 
