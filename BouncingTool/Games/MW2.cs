@@ -1,4 +1,6 @@
-﻿namespace BouncingTool.Games
+﻿using System;
+
+namespace BouncingTool.Games
 {
 	public static class MW2
 	{
@@ -20,7 +22,14 @@
 			if (!IsOnTheGame())
 				return;
 
-			XboxUtils.Call<uint>((uint)Addresses.SV_GameSendServerCommand, -1, 0, "s g_knockback \"" + strength + "\"");
+			try
+			{
+				XboxUtils.Call<uint>((uint)Addresses.SV_GameSendServerCommand, -1, 0, "s g_knockback \"" + strength + "\"");
+			}
+			catch (Exception exception)
+			{
+				XboxUtils.ErrorMessage(exception.Message);
+			}
 		}
 
 		public static void OnElevatorsButtonClick()
@@ -28,25 +37,41 @@
 			if (!IsOnTheGame())
 				return;
 
-			uint defaultValue = 0x409A0054;
-			uint modifiedValue = 0x409A0094;
-			bool elevatorsActuallyEnabled = XboxUtils.ReadUInt32((uint)Addresses.ElevatorsBranch) == modifiedValue;
+			try
+			{
+				uint defaultValue = 0x409A0054;
+				uint modifiedValue = 0x409A0094;
+				bool elevatorsActuallyEnabled = XboxUtils.ReadUInt32((uint)Addresses.ElevatorsBranch) == modifiedValue;
 
-			if (!s_ElevatorsEnabled && !elevatorsActuallyEnabled)
-				XboxUtils.WriteUInt32((uint)Addresses.ElevatorsBranch, modifiedValue);
-			else if (s_ElevatorsEnabled && elevatorsActuallyEnabled)
-				XboxUtils.WriteUInt32((uint)Addresses.ElevatorsBranch, defaultValue);
+				if (!s_ElevatorsEnabled && !elevatorsActuallyEnabled)
+					XboxUtils.WriteUInt32((uint)Addresses.ElevatorsBranch, modifiedValue);
+				else if (s_ElevatorsEnabled && elevatorsActuallyEnabled)
+					XboxUtils.WriteUInt32((uint)Addresses.ElevatorsBranch, defaultValue);
 
-			s_ElevatorsEnabled = !s_ElevatorsEnabled;
-			UpdateElevatorsLabel(s_ElevatorsEnabled);
+				s_ElevatorsEnabled = !s_ElevatorsEnabled;
+				UpdateElevatorsLabel(s_ElevatorsEnabled);
+			}
+			catch (Exception exception)
+			{
+				XboxUtils.ErrorMessage(exception.Message);
+			}
 		}
 
 		private static bool IsOnTheGame()
 		{
-			bool isOnTheGame = XboxUtils.GetCurrentTitleID() == (uint)XboxUtils.TitleIDs.MW2;
+			bool isOnTheGame = false;
 			
-			if (!isOnTheGame)
-				XboxUtils.ErrorMessage("It doesn't look like you are on MW2, make sure you are on the game before trying to infect!");
+			try
+			{
+				isOnTheGame = XboxUtils.GetCurrentTitleID() == (uint)XboxUtils.TitleIDs.MW2;
+
+				if (!isOnTheGame)
+					XboxUtils.ErrorMessage("It doesn't look like you are on MW2, make sure you are on the game before trying to infect!");
+			}
+			catch (Exception exception)
+			{
+				XboxUtils.ErrorMessage(exception.Message);
+			}
 
 			return isOnTheGame;
 		}
