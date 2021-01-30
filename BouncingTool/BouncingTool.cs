@@ -17,6 +17,13 @@ namespace BouncingTool
 			MW2.Init();
 		}
 
+		#region Global
+
+		private void EnableUIElements(bool enabled)
+		{
+			Global_TabControl.Enabled = enabled;
+		}
+
 		private void OnFormClose(object sender, FormClosingEventArgs e)
 		{
 			if (!XboxUtils.IsConnected())
@@ -48,6 +55,10 @@ namespace BouncingTool
 			}
 		}
 
+		#endregion
+
+		#region MW2
+
 		private void MW2_OnKnockbackButtonClick(object sender, EventArgs e)
 		{
 			MW2.OnKnockbackButtonClick((int)MW2_KnockbackStrengthInput.Value);
@@ -58,9 +69,6 @@ namespace BouncingTool
 			MW2.OnElevatorsButtonClick();
 		}
 
-		private void EnableUIElements(bool enabled)
-		{
-			Global_TabControl.Enabled = enabled;
-		}
+		#endregion
 	}
 }
