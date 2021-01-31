@@ -46,7 +46,7 @@
     <Reference Include="System.Xml" />
     <Reference Include="XDevkit">
       <HintPath>lib\XDevkit.dll</HintPath>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
     <Reference Include="xdrpc">
       <HintPath>lib\xdrpc.dll</HintPath>
@@ -59,6 +59,7 @@
     <Compile Include="BouncingTool.Designer.cs">
       <DependentUpon>BouncingTool.cs</DependentUpon>
     </Compile>
+    <Compile Include="Games\Alpha.cs" />
     <Compile Include="Games\MW2.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

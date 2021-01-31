@@ -63,7 +63,7 @@ namespace BouncingTool.Games
 			
 			try
 			{
-				isOnTheGame = XboxUtils.GetCurrentTitleID() == (uint)XboxUtils.TitleIDs.MW2;
+				isOnTheGame = XboxUtils.GetCurrentTitleID() == (uint)XboxUtils.TitleID.MW2;
 
 				if (!isOnTheGame)
 					XboxUtils.ErrorMessage("It doesn't look like you are on MW2, make sure you are on the game before trying to infect!");

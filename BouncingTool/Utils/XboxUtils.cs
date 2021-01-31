@@ -2,6 +2,7 @@
 using System.Windows.Forms;
 using XDevkit;
 using Microsoft.Test.Xbox.XDRPC;
+using System.Text;
 
 public static class XboxUtils
 {
@@ -11,11 +12,20 @@ public static class XboxUtils
 	private static IXboxManager m_XboxManager = null;
 	private static IXboxConsole m_XboxConsole = null;
 
-	public enum TitleIDs : uint
+	public enum TitleID : uint
 	{
 		COD4 = 0x415607E6,
 		MW2 = 0x41560817,
 		MW3 = 0x415608CB
+	}
+
+	public enum MPStringAddr : uint
+	{
+		COD4 = 0x82032AC4,
+		MW2 = 0x82001270,
+		MW3 = 0x82001458,
+		COD4_ALPHA = 0x820019EC,
+		MW2_ALPHA = 0x82001D38
 	}
 
 	public static void Connect()
@@ -155,6 +165,55 @@ public static class XboxUtils
 		}
 	}
 
+	public static int GetHostIndex(uint sessionIsHostAddr, uint sessionDataPtr)
+	{
+		int hostIndex = -1;
+
+		if (!IsConnected())
+			return hostIndex;
+
+		try
+		{
+			for (int i = 0; i < 18; i++)
+				if (Call<bool>(sessionIsHostAddr, sessionDataPtr, i))
+					hostIndex = i;
+		}
+		catch (Exception)
+		{
+			throw new Exception("Couldn't find the host!");
+		}
+
+		return hostIndex;
+	}
+
+	public static string GetXenonUserGamertag(uint xenonUserDataPtr)
+	{
+		string gamertag;
+
+		try
+		{
+			gamertag = ReadString(xenonUserDataPtr + 0x04);
+		}
+		catch (Exception)
+		{
+			throw new Exception("Couldn't get current user gamertag!");
+		}
+
+		return gamertag;
+	}
+
+	public static bool IsOnGame(TitleID titleID, MPStringAddr mpStringAddr)
+	{
+		bool isOnGame = false;
+
+		if (!IsConnected())
+			return isOnGame;
+
+		isOnGame = GetCurrentTitleID() == (uint)titleID && ReadString((uint)mpStringAddr, 11) == "multiplayer";
+
+		return isOnGame;
+	}
+
 	public static bool IsConnected()
 	{
 		return m_ActiveConnection;
@@ -259,7 +318,7 @@ public static class XboxUtils
 		}
 		catch (Exception)
 		{
-			throw new Exception("Could not read a float at 0x" + address.ToString("X"));
+			throw new Exception("Could not read an int at 0x" + address.ToString("X"));
 		}
 
 		return result;
@@ -279,7 +338,7 @@ public static class XboxUtils
 		}
 		catch (Exception)
 		{
-			throw new Exception("Could not write a float at 0x" + address.ToString("X"));
+			throw new Exception("Could not write an int at 0x" + address.ToString("X"));
 		}
 	}
 
@@ -348,7 +407,7 @@ public static class XboxUtils
 		}
 		catch (Exception)
 		{
-			throw new Exception("Could not read a float at 0x" + address.ToString("X"));
+			throw new Exception("Could not read a short at 0x" + address.ToString("X"));
 		}
 
 		return result;
@@ -369,6 +428,49 @@ public static class XboxUtils
 		catch (Exception)
 		{
 			throw new Exception("Could not write a float at 0x" + address.ToString("X"));
+		}
+	}
+
+	public static string ReadString(uint address, int length = 32)
+	{
+		string result = null;
+
+		if (!IsConnected())
+			return result;
+
+		try
+		{
+			byte[] memoryBuffer = new byte[length];
+			m_XboxConsole.DebugTarget.GetMemory(address, (uint)memoryBuffer.Length, memoryBuffer, out uint bytesRead);
+			m_XboxConsole.DebugTarget.InvalidateMemoryCache(true, address, (uint)memoryBuffer.Length);
+			result = new string(Encoding.ASCII.GetChars(memoryBuffer));
+			char[] separator = new char[1];
+			result = result.Split(separator)[0];
+		}
+		catch (Exception)
+		{
+			throw new Exception("Could not read a string at 0x" + address.ToString("X"));
+		}
+
+		return result;
+	}
+
+	public static void WriteString(uint address, string input)
+	{
+		// HAS NOT BEEN TESTED YET!!!
+		if (!IsConnected())
+			return;
+
+		try
+		{
+			byte[] memoryBuffer = new byte[input.Length + 1];
+			Encoding.ASCII.GetBytes(input).CopyTo(memoryBuffer, 0);
+			memoryBuffer[memoryBuffer.Length] = 0;
+			m_XboxConsole.DebugTarget.SetMemory(address, (uint)memoryBuffer.Length, memoryBuffer, out uint bytesWritten);
+		}
+		catch (Exception)
+		{
+			throw new Exception("Could not write a string at 0x" + address.ToString("X"));
 		}
 	}
 

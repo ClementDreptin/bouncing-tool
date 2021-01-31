@@ -42,19 +42,19 @@ namespace BouncingTool
 			this.MW2_KnockbackButton = new System.Windows.Forms.Button();
 			this.MW2_KnockbackStrengthInput = new System.Windows.Forms.NumericUpDown();
 			this.Global_AlphaTab = new System.Windows.Forms.TabPage();
-			this.Alpha_DropDownMenuLabel = new System.Windows.Forms.Label();
-			this.Alpha_GameDropDownMenu = new System.Windows.Forms.ComboBox();
-			this.cmdInput = new System.Windows.Forms.TextBox();
-			this.Alpha_CmdLabel = new System.Windows.Forms.Label();
-			this.Alpha_CmdButton = new System.Windows.Forms.Button();
+			this.Alpha_UfoButton = new System.Windows.Forms.Button();
+			this.Alpha_FallDamageButton = new System.Windows.Forms.Button();
 			this.Alpha_BindButton = new System.Windows.Forms.Button();
 			this.Alpha_LoadPosButton = new System.Windows.Forms.Button();
 			this.Alpha_SavedPosLabel = new System.Windows.Forms.Label();
 			this.Alpha_ButtonsDropDownMenu = new System.Windows.Forms.ComboBox();
 			this.Alpha_BindLabel = new System.Windows.Forms.Label();
 			this.Alpha_SavePosButton = new System.Windows.Forms.Button();
-			this.Alpha_UfoButton = new System.Windows.Forms.Button();
-			this.Alpha_FallDamageButton = new System.Windows.Forms.Button();
+			this.Alpha_CmdInput = new System.Windows.Forms.TextBox();
+			this.Alpha_CmdLabel = new System.Windows.Forms.Label();
+			this.Alpha_CmdButton = new System.Windows.Forms.Button();
+			this.Alpha_DropDownMenuLabel = new System.Windows.Forms.Label();
+			this.Alpha_GameDropDownMenu = new System.Windows.Forms.ComboBox();
 			this.Global_TabControl.SuspendLayout();
 			this.Global_MW2Tab.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.MW2_KnockbackStrengthInput)).BeginInit();
@@ -120,7 +120,7 @@ namespace BouncingTool
 			this.Global_MW2Tab.Location = new System.Drawing.Point(4, 29);
 			this.Global_MW2Tab.Name = "Global_MW2Tab";
 			this.Global_MW2Tab.Padding = new System.Windows.Forms.Padding(3);
-			this.Global_MW2Tab.Size = new System.Drawing.Size(353, 305);
+			this.Global_MW2Tab.Size = new System.Drawing.Size(373, 305);
 			this.Global_MW2Tab.TabIndex = 0;
 			this.Global_MW2Tab.Text = "MW2";
 			this.Global_MW2Tab.UseVisualStyleBackColor = true;
@@ -219,7 +219,7 @@ namespace BouncingTool
 			this.Global_AlphaTab.Controls.Add(this.Alpha_ButtonsDropDownMenu);
 			this.Global_AlphaTab.Controls.Add(this.Alpha_BindLabel);
 			this.Global_AlphaTab.Controls.Add(this.Alpha_SavePosButton);
-			this.Global_AlphaTab.Controls.Add(this.cmdInput);
+			this.Global_AlphaTab.Controls.Add(this.Alpha_CmdInput);
 			this.Global_AlphaTab.Controls.Add(this.Alpha_CmdLabel);
 			this.Global_AlphaTab.Controls.Add(this.Alpha_CmdButton);
 			this.Global_AlphaTab.Controls.Add(this.Alpha_DropDownMenuLabel);
@@ -232,63 +232,33 @@ namespace BouncingTool
 			this.Global_AlphaTab.Text = "Alpha";
 			this.Global_AlphaTab.UseVisualStyleBackColor = true;
 			// 
-			// Alpha_DropDownMenuLabel
+			// Alpha_UfoButton
 			// 
-			this.Alpha_DropDownMenuLabel.AutoSize = true;
-			this.Alpha_DropDownMenuLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.Alpha_DropDownMenuLabel.Location = new System.Drawing.Point(6, 3);
-			this.Alpha_DropDownMenuLabel.Name = "Alpha_DropDownMenuLabel";
-			this.Alpha_DropDownMenuLabel.Size = new System.Drawing.Size(102, 18);
-			this.Alpha_DropDownMenuLabel.TabIndex = 11;
-			this.Alpha_DropDownMenuLabel.Text = "Select a game";
+			this.Alpha_UfoButton.Enabled = false;
+			this.Alpha_UfoButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.Alpha_UfoButton.Location = new System.Drawing.Point(9, 265);
+			this.Alpha_UfoButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+			this.Alpha_UfoButton.Name = "Alpha_UfoButton";
+			this.Alpha_UfoButton.Size = new System.Drawing.Size(349, 30);
+			this.Alpha_UfoButton.TabIndex = 38;
+			this.Alpha_UfoButton.Text = "Toggle UFO";
+			this.Alpha_UfoButton.UseVisualStyleBackColor = true;
 			// 
-			// Alpha_GameDropDownMenu
+			// Alpha_FallDamageButton
 			// 
-			this.Alpha_GameDropDownMenu.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.Alpha_GameDropDownMenu.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.Alpha_GameDropDownMenu.FormattingEnabled = true;
-			this.Alpha_GameDropDownMenu.Items.AddRange(new object[] {
-            "CoD4 Alpha Online (328)",
-            "MW2 Alpha Online (482)"});
-			this.Alpha_GameDropDownMenu.Location = new System.Drawing.Point(9, 27);
-			this.Alpha_GameDropDownMenu.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-			this.Alpha_GameDropDownMenu.Name = "Alpha_GameDropDownMenu";
-			this.Alpha_GameDropDownMenu.Size = new System.Drawing.Size(349, 26);
-			this.Alpha_GameDropDownMenu.TabIndex = 10;
-			// 
-			// cmdInput
-			// 
-			this.cmdInput.Enabled = false;
-			this.cmdInput.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.cmdInput.Location = new System.Drawing.Point(9, 91);
-			this.cmdInput.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-			this.cmdInput.Name = "cmdInput";
-			this.cmdInput.Size = new System.Drawing.Size(229, 24);
-			this.cmdInput.TabIndex = 23;
-			// 
-			// Alpha_CmdLabel
-			// 
-			this.Alpha_CmdLabel.AutoSize = true;
-			this.Alpha_CmdLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.Alpha_CmdLabel.Location = new System.Drawing.Point(6, 69);
-			this.Alpha_CmdLabel.Name = "Alpha_CmdLabel";
-			this.Alpha_CmdLabel.Size = new System.Drawing.Size(138, 18);
-			this.Alpha_CmdLabel.TabIndex = 22;
-			this.Alpha_CmdLabel.Text = "Console Command";
-			// 
-			// Alpha_CmdButton
-			// 
-			this.Alpha_CmdButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.Alpha_CmdButton.Location = new System.Drawing.Point(243, 85);
-			this.Alpha_CmdButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-			this.Alpha_CmdButton.Name = "Alpha_CmdButton";
-			this.Alpha_CmdButton.Size = new System.Drawing.Size(115, 37);
-			this.Alpha_CmdButton.TabIndex = 21;
-			this.Alpha_CmdButton.Text = "Execute";
-			this.Alpha_CmdButton.UseVisualStyleBackColor = true;
+			this.Alpha_FallDamageButton.Enabled = false;
+			this.Alpha_FallDamageButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.Alpha_FallDamageButton.Location = new System.Drawing.Point(9, 226);
+			this.Alpha_FallDamageButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+			this.Alpha_FallDamageButton.Name = "Alpha_FallDamageButton";
+			this.Alpha_FallDamageButton.Size = new System.Drawing.Size(349, 30);
+			this.Alpha_FallDamageButton.TabIndex = 37;
+			this.Alpha_FallDamageButton.Text = "Toggle Fall Damage";
+			this.Alpha_FallDamageButton.UseVisualStyleBackColor = true;
 			// 
 			// Alpha_BindButton
 			// 
+			this.Alpha_BindButton.Enabled = false;
 			this.Alpha_BindButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.Alpha_BindButton.Location = new System.Drawing.Point(289, 181);
 			this.Alpha_BindButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -300,6 +270,7 @@ namespace BouncingTool
 			// 
 			// Alpha_LoadPosButton
 			// 
+			this.Alpha_LoadPosButton.Enabled = false;
 			this.Alpha_LoadPosButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.Alpha_LoadPosButton.Location = new System.Drawing.Point(183, 136);
 			this.Alpha_LoadPosButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -312,6 +283,7 @@ namespace BouncingTool
 			// Alpha_SavedPosLabel
 			// 
 			this.Alpha_SavedPosLabel.AutoSize = true;
+			this.Alpha_SavedPosLabel.Enabled = false;
 			this.Alpha_SavedPosLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.Alpha_SavedPosLabel.Location = new System.Drawing.Point(159, 187);
 			this.Alpha_SavedPosLabel.Name = "Alpha_SavedPosLabel";
@@ -322,6 +294,7 @@ namespace BouncingTool
 			// Alpha_ButtonsDropDownMenu
 			// 
 			this.Alpha_ButtonsDropDownMenu.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.Alpha_ButtonsDropDownMenu.Enabled = false;
 			this.Alpha_ButtonsDropDownMenu.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.Alpha_ButtonsDropDownMenu.FormattingEnabled = true;
 			this.Alpha_ButtonsDropDownMenu.Items.AddRange(new object[] {
@@ -339,6 +312,7 @@ namespace BouncingTool
 			// Alpha_BindLabel
 			// 
 			this.Alpha_BindLabel.AutoSize = true;
+			this.Alpha_BindLabel.Enabled = false;
 			this.Alpha_BindLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.Alpha_BindLabel.Location = new System.Drawing.Point(6, 185);
 			this.Alpha_BindLabel.Name = "Alpha_BindLabel";
@@ -348,6 +322,7 @@ namespace BouncingTool
 			// 
 			// Alpha_SavePosButton
 			// 
+			this.Alpha_SavePosButton.Enabled = false;
 			this.Alpha_SavePosButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.Alpha_SavePosButton.Location = new System.Drawing.Point(9, 136);
 			this.Alpha_SavePosButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -356,28 +331,65 @@ namespace BouncingTool
 			this.Alpha_SavePosButton.TabIndex = 31;
 			this.Alpha_SavePosButton.Text = "Save Position";
 			this.Alpha_SavePosButton.UseVisualStyleBackColor = true;
+			this.Alpha_SavePosButton.Click += new System.EventHandler(this.Alpha_OnSavePosButtonClick);
 			// 
-			// Alpha_UfoButton
+			// Alpha_CmdInput
 			// 
-			this.Alpha_UfoButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.Alpha_UfoButton.Location = new System.Drawing.Point(9, 265);
-			this.Alpha_UfoButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-			this.Alpha_UfoButton.Name = "Alpha_UfoButton";
-			this.Alpha_UfoButton.Size = new System.Drawing.Size(349, 30);
-			this.Alpha_UfoButton.TabIndex = 38;
-			this.Alpha_UfoButton.Text = "Toggle UFO";
-			this.Alpha_UfoButton.UseVisualStyleBackColor = true;
+			this.Alpha_CmdInput.Enabled = false;
+			this.Alpha_CmdInput.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.Alpha_CmdInput.Location = new System.Drawing.Point(9, 91);
+			this.Alpha_CmdInput.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+			this.Alpha_CmdInput.Name = "Alpha_CmdInput";
+			this.Alpha_CmdInput.Size = new System.Drawing.Size(229, 24);
+			this.Alpha_CmdInput.TabIndex = 23;
 			// 
-			// Alpha_FallDamageButton
+			// Alpha_CmdLabel
 			// 
-			this.Alpha_FallDamageButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.Alpha_FallDamageButton.Location = new System.Drawing.Point(9, 226);
-			this.Alpha_FallDamageButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-			this.Alpha_FallDamageButton.Name = "Alpha_FallDamageButton";
-			this.Alpha_FallDamageButton.Size = new System.Drawing.Size(349, 30);
-			this.Alpha_FallDamageButton.TabIndex = 37;
-			this.Alpha_FallDamageButton.Text = "Toggle Fall Damage";
-			this.Alpha_FallDamageButton.UseVisualStyleBackColor = true;
+			this.Alpha_CmdLabel.AutoSize = true;
+			this.Alpha_CmdLabel.Enabled = false;
+			this.Alpha_CmdLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.Alpha_CmdLabel.Location = new System.Drawing.Point(6, 69);
+			this.Alpha_CmdLabel.Name = "Alpha_CmdLabel";
+			this.Alpha_CmdLabel.Size = new System.Drawing.Size(138, 18);
+			this.Alpha_CmdLabel.TabIndex = 22;
+			this.Alpha_CmdLabel.Text = "Console Command";
+			// 
+			// Alpha_CmdButton
+			// 
+			this.Alpha_CmdButton.Enabled = false;
+			this.Alpha_CmdButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.Alpha_CmdButton.Location = new System.Drawing.Point(243, 85);
+			this.Alpha_CmdButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+			this.Alpha_CmdButton.Name = "Alpha_CmdButton";
+			this.Alpha_CmdButton.Size = new System.Drawing.Size(115, 37);
+			this.Alpha_CmdButton.TabIndex = 21;
+			this.Alpha_CmdButton.Text = "Execute";
+			this.Alpha_CmdButton.UseVisualStyleBackColor = true;
+			// 
+			// Alpha_DropDownMenuLabel
+			// 
+			this.Alpha_DropDownMenuLabel.AutoSize = true;
+			this.Alpha_DropDownMenuLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.Alpha_DropDownMenuLabel.Location = new System.Drawing.Point(6, 3);
+			this.Alpha_DropDownMenuLabel.Name = "Alpha_DropDownMenuLabel";
+			this.Alpha_DropDownMenuLabel.Size = new System.Drawing.Size(102, 18);
+			this.Alpha_DropDownMenuLabel.TabIndex = 11;
+			this.Alpha_DropDownMenuLabel.Text = "Select a game";
+			// 
+			// Alpha_GameDropDownMenu
+			// 
+			this.Alpha_GameDropDownMenu.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.Alpha_GameDropDownMenu.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.Alpha_GameDropDownMenu.FormattingEnabled = true;
+			this.Alpha_GameDropDownMenu.Items.AddRange(new object[] {
+            "CoD4 Alpha (328)",
+            "MW2 Alpha (482)"});
+			this.Alpha_GameDropDownMenu.Location = new System.Drawing.Point(9, 27);
+			this.Alpha_GameDropDownMenu.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+			this.Alpha_GameDropDownMenu.Name = "Alpha_GameDropDownMenu";
+			this.Alpha_GameDropDownMenu.Size = new System.Drawing.Size(349, 26);
+			this.Alpha_GameDropDownMenu.TabIndex = 10;
+			this.Alpha_GameDropDownMenu.SelectedIndexChanged += new System.EventHandler(this.Alpha_OnGameDropDownSelectedIndexChange);
 			// 
 			// BouncingTool
 			// 
@@ -404,10 +416,29 @@ namespace BouncingTool
 
 		#region UI elements getters
 
-		public System.Windows.Forms.Label GetMW2ElevatorsLabel()
-		{
-			return MW2_ElevatorsLabel;
-		}
+		public System.Windows.Forms.Label GetMW2ElevatorsLabel() { return MW2_ElevatorsLabel; }
+
+		public System.Windows.Forms.Label GetAlphaCmdLabel() { return Alpha_CmdLabel; }
+
+		public System.Windows.Forms.TextBox GetAlphaCmdInput() { return Alpha_CmdInput; }
+
+		public System.Windows.Forms.Button GetAlphaCmdButton() { return Alpha_CmdButton; }
+
+		public System.Windows.Forms.Button GetAlphaSavePosButton() { return Alpha_SavePosButton; }
+
+		public System.Windows.Forms.Button GetAlphaLoadPosButton() { return Alpha_LoadPosButton; }
+
+		public System.Windows.Forms.Label GetAlphaBindLabel() { return Alpha_BindLabel; }
+
+		public System.Windows.Forms.ComboBox GetAlphaButtonsDropDownMenu() { return Alpha_ButtonsDropDownMenu; }
+
+		public System.Windows.Forms.Label GetAlphaSavedPosLabel() { return Alpha_SavedPosLabel; }
+
+		public System.Windows.Forms.Button GetAlphaBindButton() { return Alpha_BindButton; }
+
+		public System.Windows.Forms.Button GetAlphaFallDamageButton() { return Alpha_FallDamageButton; }
+
+		public System.Windows.Forms.Button GetAlphaUfoButton() { return Alpha_UfoButton; }
 
 		#endregion
 
@@ -432,7 +463,7 @@ namespace BouncingTool
 		private System.Windows.Forms.ComboBox Alpha_ButtonsDropDownMenu;
 		private System.Windows.Forms.Label Alpha_BindLabel;
 		private System.Windows.Forms.Button Alpha_SavePosButton;
-		private System.Windows.Forms.TextBox cmdInput;
+		private System.Windows.Forms.TextBox Alpha_CmdInput;
 		private System.Windows.Forms.Label Alpha_CmdLabel;
 		private System.Windows.Forms.Button Alpha_CmdButton;
 		private System.Windows.Forms.Label Alpha_DropDownMenuLabel;
