@@ -30,9 +30,9 @@ namespace BouncingTool.Games
 
 	public static class Alpha
 	{
-		private static bool s_InitDone = false;
 		private static int s_ClientIndex = -1;
 		private static string s_Gamertag = null;
+		private static bool s_CheatsEnabled = false;
 
 		private static GameInfo s_COD4 = new GameInfo()
 		{
@@ -80,15 +80,15 @@ namespace BouncingTool.Games
 					break;
 			}
 
-			if (!s_InitDone)
-				Init();
+			Init();
 		}
 
 		public static void OnSavePosButtonClick()
 		{
-			CheckClientIndexValidity();
+			if (!IsValidToProcess())
+				return;
 
-			uint playerStatePtr = GetPlayerStatePtr();
+			uint playerStatePtr = GetPlayerStatePtr(s_ClientIndex);
 			float[] pos = XboxUtils.ReadVec3(playerStatePtr + 0x1C);
 			Console.WriteLine("x: " + pos[0]);
 			Console.WriteLine("y: " + pos[1]);
@@ -98,6 +98,9 @@ namespace BouncingTool.Games
 		public static void OnCmdButtonClick(string command)
 		{
 			if (command == "")
+				return;
+
+			if (!IsValidToProcess())
 				return;
 
 			try
@@ -114,27 +117,24 @@ namespace BouncingTool.Games
 
 		private static void Init()
 		{
-			if (!IsOnTheGame())
-				return;
+			bool isOnGame = IsOnTheGame();
+			if (isOnGame)
+				s_Gamertag = XboxUtils.GetXenonUserGamertag(s_CurrentGame.XenonUserDataPtr);
 
-			s_Gamertag = XboxUtils.GetXenonUserGamertag(s_CurrentGame.XenonUserDataPtr);
-
-			BouncingTool.s_Form.GetAlphaCmdLabel().Enabled = true;
-			BouncingTool.s_Form.GetAlphaCmdInput().Enabled = true;
-			BouncingTool.s_Form.GetAlphaCmdButton().Enabled = true;
-			BouncingTool.s_Form.GetAlphaSavePosButton().Enabled = true;
-			BouncingTool.s_Form.GetAlphaLoadPosButton().Enabled = true;
-			BouncingTool.s_Form.GetAlphaBindLabel().Enabled = true;
-			BouncingTool.s_Form.GetAlphaButtonsDropDownMenu().Enabled = true;
-			BouncingTool.s_Form.GetAlphaSavedPosLabel().Enabled = true;
-			BouncingTool.s_Form.GetAlphaBindButton().Enabled = true;
-			BouncingTool.s_Form.GetAlphaFallDamageButton().Enabled = true;
-			BouncingTool.s_Form.GetAlphaUfoButton().Enabled = true;
-
-			s_InitDone = true;
+			BouncingTool.s_Form.GetAlphaCmdLabel().Enabled = isOnGame;
+			BouncingTool.s_Form.GetAlphaCmdInput().Enabled = isOnGame;
+			BouncingTool.s_Form.GetAlphaCmdButton().Enabled = isOnGame;
+			BouncingTool.s_Form.GetAlphaSavePosButton().Enabled = isOnGame;
+			BouncingTool.s_Form.GetAlphaLoadPosButton().Enabled = isOnGame;
+			BouncingTool.s_Form.GetAlphaBindLabel().Enabled = isOnGame;
+			BouncingTool.s_Form.GetAlphaButtonsDropDownMenu().Enabled = isOnGame;
+			BouncingTool.s_Form.GetAlphaSavedPosLabel().Enabled = isOnGame;
+			BouncingTool.s_Form.GetAlphaBindButton().Enabled = isOnGame;
+			BouncingTool.s_Form.GetAlphaFallDamageButton().Enabled = isOnGame;
+			BouncingTool.s_Form.GetAlphaUfoButton().Enabled = isOnGame;
 		}
 
-		private static uint GetPlayerStatePtr()
+		private static uint GetPlayerStatePtr(int clientIndex)
 		{
 			uint playerStatePtr = 0;
 
@@ -144,12 +144,12 @@ namespace BouncingTool.Games
 				{
 					uint level_locals_t = 0x831A5EE0;
 					uint clientsPtr = XboxUtils.ReadUInt32(level_locals_t);
-					playerStatePtr = (uint)(clientsPtr + (s_ClientIndex * 0x2FB8));
+					playerStatePtr = (uint)(clientsPtr + (clientIndex * 0x2FB8));
 				}
 				else if (s_CurrentGame.TitleID == XboxUtils.TitleID.MW2)
 				{
 					uint getPlayerStateAddr = 0x8222C108;
-					playerStatePtr = XboxUtils.Call<uint>(getPlayerStateAddr, s_ClientIndex);
+					playerStatePtr = XboxUtils.Call<uint>(getPlayerStateAddr, clientIndex);
 				}
 			}
 			catch (Exception exception)
@@ -158,6 +158,21 @@ namespace BouncingTool.Games
 			}
 
 			return playerStatePtr;
+		}
+
+		public static void SV_GameSendServerCommand(int clientIndex, string command)
+		{
+			if (clientIndex == -1)
+				return;
+
+			try
+			{
+				XboxUtils.Call<uint>(s_CurrentGame.SV_GameSendServerCommand, clientIndex, 0, command);
+			}
+			catch (Exception)
+			{
+				XboxUtils.ErrorMessage("Couldn't call SV_GameSendServerCommand");
+			}
 		}
 
 		private static void CheckClientIndexValidity()
@@ -196,6 +211,27 @@ namespace BouncingTool.Games
 			{
 				XboxUtils.ErrorMessage(exception.Message);
 			}
+		}
+
+		private static void EnableCheatsIfNeeded()
+		{
+			if (!s_CheatsEnabled && s_CurrentGame.TitleID == XboxUtils.TitleID.COD4 && s_ClientIndex != -1)
+			{
+				SV_GameSendServerCommand(s_ClientIndex, "v sv_cheats \"1\"");
+				s_CheatsEnabled = true;
+				Console.WriteLine("enabled cheats");
+			}
+		}
+
+		private static bool IsValidToProcess()
+		{
+			if (!IsOnTheGame())
+				return false;
+
+			CheckClientIndexValidity();
+			EnableCheatsIfNeeded();
+
+			return true;
 		}
 
 		private static bool IsOnTheGame()
