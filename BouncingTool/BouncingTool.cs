@@ -73,14 +73,19 @@ namespace BouncingTool
 
 		#region Alpha
 
-		private void Alpha_OnSavePosButtonClick(object sender, EventArgs e)
-		{
-			Alpha.OnSavePosButtonClick();
-		}
-
 		private void Alpha_OnGameDropDownSelectedIndexChange(object sender, EventArgs e)
 		{
 			Alpha.OnGameDropDownSelectedIndexChange(Alpha_GameDropDownMenu.SelectedIndex);
+		}
+
+		private void Alpha_OnCmdButtonClick(object sender, EventArgs e)
+		{
+			Alpha.OnCmdButtonClick(Alpha_CmdInput.Text);
+		}
+
+		private void Alpha_OnSavePosButtonClick(object sender, EventArgs e)
+		{
+			Alpha.OnSavePosButtonClick();
 		}
 
 		#endregion

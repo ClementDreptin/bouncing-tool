@@ -365,6 +365,7 @@ namespace BouncingTool
 			this.Alpha_CmdButton.TabIndex = 21;
 			this.Alpha_CmdButton.Text = "Execute";
 			this.Alpha_CmdButton.UseVisualStyleBackColor = true;
+			this.Alpha_CmdButton.Click += new System.EventHandler(this.Alpha_OnCmdButtonClick);
 			// 
 			// Alpha_DropDownMenuLabel
 			// 

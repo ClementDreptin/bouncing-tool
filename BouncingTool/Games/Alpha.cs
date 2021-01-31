@@ -13,6 +13,7 @@ namespace BouncingTool.Games
 		public uint SV_GameSendServerCommand;
 		public uint G_GetClientState;
 		public uint Dvar_GetBool;
+		public uint Cbuf_AddText;
 
 		// Struct pointers
 		public uint XenonUserDataPtr;
@@ -42,6 +43,7 @@ namespace BouncingTool.Games
 			SV_GameSendServerCommand = 0x82234490,
 			G_GetClientState = 0x821C81E0,
 			Dvar_GetBool = 0x82269EA8,
+			Cbuf_AddText = 0x821FDFA8,
 
 			XenonUserDataPtr = 0x85E03418,
 
@@ -57,6 +59,7 @@ namespace BouncingTool.Games
 			SV_GameSendServerCommand = 0x822B6140,
 			G_GetClientState = 0x8222C0F0,
 			Dvar_GetBool = 0x82303B00,
+			Cbuf_AddText = 0x8226F590,
 
 			XenonUserDataPtr = 0x837FE078,
 
@@ -64,17 +67,6 @@ namespace BouncingTool.Games
 		};
 
 		private static GameInfo s_CurrentGame;
-
-		public static void OnSavePosButtonClick()
-		{
-			CheckClientIndexValidity();
-
-			uint playerStatePtr = GetPlayerStatePtr();
-			float[] pos = XboxUtils.ReadVec3(playerStatePtr + 0x1C);
-			Console.WriteLine("x: " + pos[0]);
-			Console.WriteLine("y: " + pos[1]);
-			Console.WriteLine("z: " + pos[2]);
-		}
 
 		public static void OnGameDropDownSelectedIndexChange(int selectedIndex)
 		{
@@ -90,6 +82,32 @@ namespace BouncingTool.Games
 
 			if (!s_InitDone)
 				Init();
+		}
+
+		public static void OnSavePosButtonClick()
+		{
+			CheckClientIndexValidity();
+
+			uint playerStatePtr = GetPlayerStatePtr();
+			float[] pos = XboxUtils.ReadVec3(playerStatePtr + 0x1C);
+			Console.WriteLine("x: " + pos[0]);
+			Console.WriteLine("y: " + pos[1]);
+			Console.WriteLine("z: " + pos[2]);
+		}
+
+		public static void OnCmdButtonClick(string command)
+		{
+			if (command == "")
+				return;
+
+			try
+			{
+				XboxUtils.Call<uint>(s_CurrentGame.Cbuf_AddText, 0, command);
+			}
+			catch (Exception)
+			{
+				XboxUtils.ErrorMessage("Couldn't execute command!");
+			}
 		}
 
 		#region Utility methods
