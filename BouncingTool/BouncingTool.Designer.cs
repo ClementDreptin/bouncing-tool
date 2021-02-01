@@ -279,6 +279,7 @@ namespace BouncingTool
 			this.Alpha_LoadPosButton.TabIndex = 35;
 			this.Alpha_LoadPosButton.Text = "Load Position";
 			this.Alpha_LoadPosButton.UseVisualStyleBackColor = true;
+			this.Alpha_LoadPosButton.Click += new System.EventHandler(this.Alpha_OnLoadPosButtonClick);
 			// 
 			// Alpha_SavedPosLabel
 			// 

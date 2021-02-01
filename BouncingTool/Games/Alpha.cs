@@ -19,7 +19,8 @@ namespace BouncingTool.Games
 		public uint XenonUserDataPtr;
 
 		// Struct sizes and offsets
-		public uint nameOffset; // offset of name in clientState_s
+		public uint NameOffset; // offset of name in clientState_s
+		public uint ViewAnglesOffset; // offset of viewangles in playrState_s
 	}
 
 	public enum GameDropDownIndex
@@ -33,6 +34,8 @@ namespace BouncingTool.Games
 		private static int s_ClientIndex = -1;
 		private static string s_Gamertag = null;
 		private static bool s_CheatsEnabled = false;
+		private static float[] s_SavedPosition = null;
+		private static float[] s_SavedViewAngles = null;
 
 		private static GameInfo s_COD4 = new GameInfo()
 		{
@@ -47,7 +50,8 @@ namespace BouncingTool.Games
 
 			XenonUserDataPtr = 0x85E03418,
 
-			nameOffset = 0x3C
+			NameOffset = 0x3C,
+			ViewAnglesOffset = 0x108
 		};
 
 		private static GameInfo s_MW2 = new GameInfo()
@@ -63,7 +67,8 @@ namespace BouncingTool.Games
 
 			XenonUserDataPtr = 0x837FE078,
 
-			nameOffset = 0x44
+			NameOffset = 0x44,
+			ViewAnglesOffset = 0x10C
 		};
 
 		private static GameInfo s_CurrentGame;
@@ -83,18 +88,6 @@ namespace BouncingTool.Games
 			Init();
 		}
 
-		public static void OnSavePosButtonClick()
-		{
-			if (!IsValidToProcess())
-				return;
-
-			uint playerStatePtr = GetPlayerStatePtr(s_ClientIndex);
-			float[] pos = XboxUtils.ReadVec3(playerStatePtr + 0x1C);
-			Console.WriteLine("x: " + pos[0]);
-			Console.WriteLine("y: " + pos[1]);
-			Console.WriteLine("z: " + pos[2]);
-		}
-
 		public static void OnCmdButtonClick(string command)
 		{
 			if (command == "")
@@ -103,13 +96,47 @@ namespace BouncingTool.Games
 			if (!IsValidToProcess())
 				return;
 
+			SendCommand(command);
+		}
+
+		public static void OnSavePosButtonClick()
+		{
+			if (!IsValidToProcess())
+				return;
+
 			try
 			{
-				XboxUtils.Call<uint>(s_CurrentGame.Cbuf_AddText, 0, command);
+				uint playerStatePtr = GetPlayerStatePtr(s_ClientIndex);
+				s_SavedPosition = XboxUtils.ReadVec3(playerStatePtr + 0x1C);
+				s_SavedViewAngles = XboxUtils.ReadVec3(playerStatePtr + s_CurrentGame.ViewAnglesOffset);
+				iPrintLn("Position ^2Saved");
 			}
-			catch (Exception)
+			catch (Exception exception)
 			{
-				XboxUtils.ErrorMessage("Couldn't execute command!");
+				XboxUtils.ErrorMessage(exception.Message);
+			}
+		}
+
+		public static void OnLoadPosButtonClick()
+		{
+			if (!IsValidToProcess())
+				return;
+
+			try
+			{
+				if (s_SavedPosition == null || s_SavedPosition.Length == 0)
+				{
+					iPrintLn("^1Save a Position first!");
+					return;
+				}
+
+				// viewX and viewY are inverted and z is offset by +60 in the setviewpos command
+				SendCommand("setviewpos " + Math.Round(s_SavedPosition[0]) + " " + Math.Round(s_SavedPosition[1]) + " " + Math.Round(s_SavedPosition[2] + 60.0f) + " " + Math.Round(s_SavedViewAngles[1]) + " " + Math.Round(s_SavedViewAngles[0]));
+				iPrintLn("Position ^2Loaded");
+			}
+			catch (Exception exception)
+			{
+				XboxUtils.ErrorMessage(exception.Message);
 			}
 		}
 
@@ -119,7 +146,10 @@ namespace BouncingTool.Games
 		{
 			bool isOnGame = IsOnTheGame();
 			if (isOnGame)
+			{
 				s_Gamertag = XboxUtils.GetXenonUserGamertag(s_CurrentGame.XenonUserDataPtr);
+				SendCommand("loc_warnings 0;loc_warningsaserrors 0"); // Allows unlocalized strings
+			}
 
 			BouncingTool.s_Form.GetAlphaCmdLabel().Enabled = isOnGame;
 			BouncingTool.s_Form.GetAlphaCmdInput().Enabled = isOnGame;
@@ -175,6 +205,23 @@ namespace BouncingTool.Games
 			}
 		}
 
+		private static void iPrintLn(string message)
+		{
+			SV_GameSendServerCommand(s_ClientIndex, "f \"" + message + "\"");
+		}
+
+		private static void SendCommand(string command)
+		{
+			try
+			{
+				XboxUtils.Call<uint>(s_CurrentGame.Cbuf_AddText, 0, command);
+			}
+			catch (Exception)
+			{
+				XboxUtils.ErrorMessage("Couldn't execute command!");
+			}
+		}
+
 		private static void CheckClientIndexValidity()
 		{
 			try
@@ -190,7 +237,7 @@ namespace BouncingTool.Games
 				if (s_ClientIndex != -1)
 				{
 					uint clientStatePtr = XboxUtils.Call<uint>(s_CurrentGame.G_GetClientState, s_ClientIndex);
-					string gtFromClientState = XboxUtils.ReadString(clientStatePtr + s_CurrentGame.nameOffset);
+					string gtFromClientState = XboxUtils.ReadString(clientStatePtr + s_CurrentGame.NameOffset);
 					if (gtFromClientState == s_Gamertag)
 						return;
 				}
@@ -198,7 +245,7 @@ namespace BouncingTool.Games
 				for (int i = 0; i < 18; i++)
 				{
 					uint clientStatePtr = XboxUtils.Call<uint>(s_CurrentGame.G_GetClientState, i);
-					string currentClientGT = XboxUtils.ReadString(clientStatePtr + s_CurrentGame.nameOffset);
+					string currentClientGT = XboxUtils.ReadString(clientStatePtr + s_CurrentGame.NameOffset);
 					
 					if (currentClientGT == s_Gamertag)
 					{
@@ -219,7 +266,6 @@ namespace BouncingTool.Games
 			{
 				SV_GameSendServerCommand(s_ClientIndex, "v sv_cheats \"1\"");
 				s_CheatsEnabled = true;
-				Console.WriteLine("enabled cheats");
 			}
 		}
 

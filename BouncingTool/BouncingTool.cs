@@ -87,6 +87,10 @@ namespace BouncingTool
 		{
 			Alpha.OnSavePosButtonClick();
 		}
+		private void Alpha_OnLoadPosButtonClick(object sender, EventArgs e)
+		{
+			Alpha.OnLoadPosButtonClick();
+		}
 
 		#endregion
 	}
