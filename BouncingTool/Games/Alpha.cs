@@ -33,7 +33,6 @@ namespace BouncingTool.Games
 	{
 		private static int s_ClientIndex = -1;
 		private static string s_Gamertag = null;
-		private static bool s_CheatsEnabled = false;
 		private static float[] s_SavedPosition = null;
 		private static float[] s_SavedViewAngles = null;
 		private static bool s_FallDamageEnabled = true;
@@ -304,11 +303,8 @@ namespace BouncingTool.Games
 
 		private static void EnableCheatsIfNeeded()
 		{
-			if (!s_CheatsEnabled && s_CurrentGame.TitleID == XboxUtils.TitleID.COD4 && s_ClientIndex != -1)
-			{
+			if (s_CurrentGame.TitleID == XboxUtils.TitleID.COD4 && s_ClientIndex != -1)
 				SV_GameSendServerCommand(s_ClientIndex, "v sv_cheats \"1\"");
-				s_CheatsEnabled = true;
-			}
 		}
 
 		private static bool IsValidToProcess()
