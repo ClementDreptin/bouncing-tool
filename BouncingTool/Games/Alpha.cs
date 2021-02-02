@@ -18,9 +18,9 @@ namespace BouncingTool.Games
 		// Struct pointers
 		public uint XenonUserDataPtr;
 
-		// Struct sizes and offsets
+		// Offsets of struct members
 		public uint NameOffset; // offset of name in clientState_s
-		public uint ViewAnglesOffset; // offset of viewangles in playrState_s
+		public uint ViewAnglesOffset; // offset of viewangles in playerState_s
 	}
 
 	public enum GameDropDownIndex
