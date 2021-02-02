@@ -140,6 +140,27 @@ namespace BouncingTool.Games
 			}
 		}
 
+		public static void OnBindButtonClick(string buttonName)
+		{
+			if (!IsValidToProcess())
+				return;
+
+			if (buttonName == "")
+			{
+				XboxUtils.ErrorMessage("Select a button first!");
+				return;
+			}
+			if (s_SavedPosition == null || s_SavedPosition.Length == 0)
+			{
+				XboxUtils.ErrorMessage("Save a position first!");
+				return;
+			}
+
+			// viewX and viewY are inverted and z is offset by +60 in the setviewpos command
+			SendCommand("bind " + buttonName + " setviewpos " + Math.Round(s_SavedPosition[0]) + " " + Math.Round(s_SavedPosition[1]) + " " + Math.Round(s_SavedPosition[2] + 60.0f) + " " + Math.Round(s_SavedViewAngles[1]) + " " + Math.Round(s_SavedViewAngles[0]));
+			iPrintLn("Saved Position bound to ^2" + buttonName);
+		}
+
 		#region Utility methods
 
 		private static void Init()

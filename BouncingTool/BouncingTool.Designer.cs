@@ -267,6 +267,7 @@ namespace BouncingTool
 			this.Alpha_BindButton.TabIndex = 36;
 			this.Alpha_BindButton.Text = "OK";
 			this.Alpha_BindButton.UseVisualStyleBackColor = true;
+			this.Alpha_BindButton.Click += new System.EventHandler(this.Alpha_OnBindButtonClick);
 			// 
 			// Alpha_LoadPosButton
 			// 

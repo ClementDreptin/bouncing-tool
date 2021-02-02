@@ -92,6 +92,11 @@ namespace BouncingTool
 			Alpha.OnLoadPosButtonClick();
 		}
 
+		private void Alpha_OnBindButtonClick(object sender, EventArgs e)
+		{
+			Alpha.OnBindButtonClick(Alpha_ButtonsDropDownMenu.Text);
+		}
+
 		#endregion
 	}
 }
