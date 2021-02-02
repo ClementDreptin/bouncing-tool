@@ -243,6 +243,7 @@ namespace BouncingTool
 			this.Alpha_UfoButton.TabIndex = 38;
 			this.Alpha_UfoButton.Text = "Toggle UFO";
 			this.Alpha_UfoButton.UseVisualStyleBackColor = true;
+			this.Alpha_UfoButton.Click += new System.EventHandler(this.Alpha_OnUfoButtonClick);
 			// 
 			// Alpha_FallDamageButton
 			// 
@@ -255,6 +256,7 @@ namespace BouncingTool
 			this.Alpha_FallDamageButton.TabIndex = 37;
 			this.Alpha_FallDamageButton.Text = "Toggle Fall Damage";
 			this.Alpha_FallDamageButton.UseVisualStyleBackColor = true;
+			this.Alpha_FallDamageButton.Click += new System.EventHandler(this.Alpha_OnFallDamageButtonClick);
 			// 
 			// Alpha_BindButton
 			// 

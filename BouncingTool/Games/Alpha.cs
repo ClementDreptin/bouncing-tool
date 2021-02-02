@@ -36,6 +36,7 @@ namespace BouncingTool.Games
 		private static bool s_CheatsEnabled = false;
 		private static float[] s_SavedPosition = null;
 		private static float[] s_SavedViewAngles = null;
+		private static bool s_FallDamageEnabled = true;
 
 		private static GameInfo s_COD4 = new GameInfo()
 		{
@@ -152,6 +153,33 @@ namespace BouncingTool.Games
 			// viewX and viewY are inverted and z is offset by +60 in the setviewpos command
 			SendCommand("bind " + buttonName + " setviewpos " + Math.Round(s_SavedPosition[0]) + " " + Math.Round(s_SavedPosition[1]) + " " + Math.Round(s_SavedPosition[2] + 60.0f) + " " + Math.Round(s_SavedViewAngles[1]) + " " + Math.Round(s_SavedViewAngles[0]));
 			iPrintLn("Saved Position bound to ^2" + buttonName);
+		}
+
+		public static void OnFallDamageButtonClick()
+		{
+			if (!IsValidToProcess())
+				return;
+
+			if (s_FallDamageEnabled)
+			{
+				SendCommand("bg_fallDamageMaxHeight 9999;bg_fallDamageMinHeight 9998");
+				iPrintLn("Fall Damage ^2Off");
+				s_FallDamageEnabled = false;
+			}
+			else
+			{
+				SendCommand("bg_fallDamageMaxHeight 300;bg_fallDamageMinHeight 128");
+				iPrintLn("Fall Damage ^1On");
+				s_FallDamageEnabled = true;
+			}
+		}
+
+		public static void OnUfoButtonClick()
+		{
+			if (!IsValidToProcess())
+				return;
+
+			SendCommand("ufo");
 		}
 
 		#region Utility methods

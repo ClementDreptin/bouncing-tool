@@ -97,6 +97,16 @@ namespace BouncingTool
 			Alpha.OnBindButtonClick(Alpha_ButtonsDropDownMenu.Text);
 		}
 
+		private void Alpha_OnFallDamageButtonClick(object sender, EventArgs e)
+		{
+			Alpha.OnFallDamageButtonClick();
+		}
+
+		private void Alpha_OnUfoButtonClick(object sender, EventArgs e)
+		{
+			Alpha.OnUfoButtonClick();
+		}
+
 		#endregion
 	}
 }
