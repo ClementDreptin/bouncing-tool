@@ -122,22 +122,15 @@ namespace BouncingTool.Games
 			if (!IsValidToProcess())
 				return;
 
-			try
+			if (s_SavedPosition == null || s_SavedPosition.Length == 0)
 			{
-				if (s_SavedPosition == null || s_SavedPosition.Length == 0)
-				{
-					iPrintLn("^1Save a Position first!");
-					return;
-				}
+				XboxUtils.ErrorMessage("Save a position first!");
+				return;
+			}
 
-				// viewX and viewY are inverted and z is offset by +60 in the setviewpos command
-				SendCommand("setviewpos " + Math.Round(s_SavedPosition[0]) + " " + Math.Round(s_SavedPosition[1]) + " " + Math.Round(s_SavedPosition[2] + 60.0f) + " " + Math.Round(s_SavedViewAngles[1]) + " " + Math.Round(s_SavedViewAngles[0]));
-				iPrintLn("Position ^2Loaded");
-			}
-			catch (Exception exception)
-			{
-				XboxUtils.ErrorMessage(exception.Message);
-			}
+			// viewX and viewY are inverted and z is offset by +60 in the setviewpos command
+			SendCommand("setviewpos " + Math.Round(s_SavedPosition[0]) + " " + Math.Round(s_SavedPosition[1]) + " " + Math.Round(s_SavedPosition[2] + 60.0f) + " " + Math.Round(s_SavedViewAngles[1]) + " " + Math.Round(s_SavedViewAngles[0]));
+			iPrintLn("Position ^2Loaded");
 		}
 
 		public static void OnBindButtonClick(string buttonName)
