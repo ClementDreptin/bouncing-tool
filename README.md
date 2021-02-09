@@ -4,7 +4,7 @@ Tool with bouncing related mods for different Call of Duty games.
 ## Installation
 
 ### Normal use
-Run `copylibs.bat` by double-clicking on it to copy the required DLL's to the current directory. This speed needs to be run next to the executable.
+Run `copylibs.bat` by double-clicking on it to copy the required DLL's to the current directory. This needs to be run next to the executable.
 
 ### Development
 Run `scripts\copylibs-dev.bat` by double-clicking on it to copy the required DLL's to `BouncingTool\lib\`.  
