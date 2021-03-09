@@ -9,7 +9,7 @@ namespace BouncingTool.Games
 		private enum Addresses : uint
 		{
 			SV_GameSendServerCommand = 0x822548D8,
-			ElevatorsBranch = 0x820D8310
+			ElevatorsBranch = 0x820D8360
 		}
 
 		public static void Init()
@@ -39,14 +39,14 @@ namespace BouncingTool.Games
 
 			try
 			{
-				uint defaultValue = 0x409A0054;
-				uint modifiedValue = 0x409A0094;
-				bool elevatorsActuallyEnabled = XboxUtils.ReadUInt32((uint)Addresses.ElevatorsBranch) == modifiedValue;
+				ushort defaultValue = 0x419A;
+				ushort modifiedValue = 0x4800;
+				bool elevatorsActuallyEnabled = XboxUtils.ReadUShort((uint)Addresses.ElevatorsBranch) == modifiedValue;
 
 				if (!s_ElevatorsEnabled && !elevatorsActuallyEnabled)
-					XboxUtils.WriteUInt32((uint)Addresses.ElevatorsBranch, modifiedValue);
+					XboxUtils.WriteUShort((uint)Addresses.ElevatorsBranch, modifiedValue);
 				else if (s_ElevatorsEnabled && elevatorsActuallyEnabled)
-					XboxUtils.WriteUInt32((uint)Addresses.ElevatorsBranch, defaultValue);
+					XboxUtils.WriteUShort((uint)Addresses.ElevatorsBranch, defaultValue);
 
 				s_ElevatorsEnabled = !s_ElevatorsEnabled;
 				UpdateElevatorsLabel(s_ElevatorsEnabled);
