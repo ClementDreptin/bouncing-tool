@@ -427,7 +427,48 @@ public static class XboxUtils
 		}
 		catch (Exception)
 		{
-			throw new Exception("Could not write a float at 0x" + address.ToString("X"));
+			throw new Exception("Could not write a short at 0x" + address.ToString("X"));
+		}
+	}
+
+	public static ushort ReadUShort(uint address)
+	{
+		ushort result = 0; ;
+
+		if (!IsConnected())
+			return result;
+
+		try
+		{
+			byte[] memoryBuffer = new byte[2];
+			m_XboxConsole.DebugTarget.GetMemory(address, (uint)memoryBuffer.Length, memoryBuffer, out uint bytesRead);
+			m_XboxConsole.DebugTarget.InvalidateMemoryCache(true, address, (uint)memoryBuffer.Length);
+			Array.Reverse(memoryBuffer, 0, memoryBuffer.Length);
+			result = BitConverter.ToUInt16(memoryBuffer, 0);
+		}
+		catch (Exception)
+		{
+			throw new Exception("Could not read a ushort at 0x" + address.ToString("X"));
+		}
+
+		return result;
+	}
+
+	public static void WriteUShort(uint address, ushort input)
+	{
+		if (!IsConnected())
+			return;
+
+		try
+		{
+			byte[] memoryBuffer = new byte[2];
+			BitConverter.GetBytes(input).CopyTo(memoryBuffer, 0);
+			Array.Reverse(memoryBuffer, 0, memoryBuffer.Length);
+			m_XboxConsole.DebugTarget.SetMemory(address, (uint)memoryBuffer.Length, memoryBuffer, out uint bytesWritten);
+		}
+		catch (Exception)
+		{
+			throw new Exception("Could not write a ushort at 0x" + address.ToString("X"));
 		}
 	}
 
